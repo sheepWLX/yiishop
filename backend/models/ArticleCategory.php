@@ -2,30 +2,30 @@
 
 namespace backend\models;
 
-use yii\db\ActiveRecord;
+use Yii;
 
 /**
- * This is the model class for table "brand".
+ * This is the model class for table "article_category".
  *
  * @property int $id
  * @property string $name 名称
- * @property string $logo 图像
  * @property int $sort 排序
  * @property int $status 状态
  * @property string $intro 简介
+ * @property int $is_help 是否是帮助类
  */
-class Brand extends ActiveRecord
+class ArticleCategory extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
-//    public $imgFile;
     public function rules()
     {
         return [
-            [['name','sort','status'], 'required'],
-//            [['imgFile'],'image','skipOnEmpty' => true,'extensions' => ['jpg','png','gif']],
-            [['intro','logo'],'safe']
+            [['name','sort','status','is_help'], 'required'],
+            [['intro'],'safe'],
+            [['name'],'unique']
         ];
     }
 
@@ -37,11 +37,10 @@ class Brand extends ActiveRecord
         return [
             'id' => 'ID',
             'name' => '名称',
-            'logo'=>'图像',
-//            'imgFile' => '图像',
             'sort' => '排序',
             'status' => '状态',
             'intro' => '简介',
+            'is_help' => '是否是帮助类',
         ];
     }
 }

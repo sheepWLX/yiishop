@@ -23,7 +23,15 @@
             }
             ?></td>
         <td><?=$brand->intro?></td>
-        <td><img src="/<?=$brand->logo?>" height="30" alt=""></td>
+        <td>
+            <?php
+                if(strpos($brand->logo,'http://')!==false){
+                    echo \yii\bootstrap\Html::img($brand->logo,['height'=>'50']);
+                }else{
+                    echo \yii\bootstrap\Html::img("/".$brand->logo,['height'=>'50']);
+                }
+            ?>
+        </td>
         <td>
             <a href="<?=\yii\helpers\Url::to(['edit','id'=>$brand->id])?>" class="btn btn-success">编辑</a>
             <a href="<?=\yii\helpers\Url::to(['del','id'=>$brand->id])?>" class="btn btn-danger">删除</a>
