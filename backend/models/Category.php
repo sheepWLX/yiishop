@@ -71,4 +71,7 @@ class Category extends \yii\db\ActiveRecord
             'prent_id' => '父级编号',
         ];
     }
+    public function getNameText(){
+        return str_repeat("-",$this->depth).$this->name;
+    }
 }

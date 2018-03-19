@@ -1,4 +1,5 @@
 <?php
+echo \yii\helpers\Html::a('首页',['index'],['class'=>'btn btn-info']);
 /* @var $this yii\web\View */
 $form = \yii\bootstrap\ActiveForm::begin();
 echo $form->field($model,'name');
@@ -18,7 +19,7 @@ echo \liyuze\ztree\ZTree::widget([
     'nodes' => $catesJson
 ]);
 echo $form->field($model,'intro')->textarea();
-echo \yii\helpers\Html::submitButton('提交',['class'=>'btn btn-info']);
+echo \yii\helpers\Html::submitButton('提交',['class'=>'btn btn-success']);
 \yii\bootstrap\ActiveForm::end();
 ?>
 <script>
@@ -30,10 +31,12 @@ echo \yii\helpers\Html::submitButton('提交',['class'=>'btn btn-info']);
     }
 </script>
 <?php
-$js=<<<WLX
+$js=<<<JS
     var treeObj = $.fn.zTree.getZTreeObj("w1");
 treeObj.expandAll(true);
-WLX;
+var node = treeObj.getNodeByParam("id", "{$model->prent_id}", null);
+treeObj.selectNode(node);
+JS;
 
 $this->registerJs($js);
 ?>
