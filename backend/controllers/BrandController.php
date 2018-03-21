@@ -178,7 +178,7 @@ class BrandController extends \yii\web\Controller
         $bucket = 'yiishop';
         $zone = 'south_china';
         $qiniu = new Qiniu($ak, $sk,$domain, $bucket,$zone);
-        $key = time();
+        $key = uniqid();
         $key .= strtolower(strrchr($_FILES['file']['name'], '.'));
 
         $qiniu->uploadFile($_FILES['file']['tmp_name'],$key);

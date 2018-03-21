@@ -1,3 +1,4 @@
+<h3>品牌管理</h3>
 <a href="<?=\yii\helpers\Url::to(['add'])?>" class="btn btn-info">添加</a>
 <a href="<?=\yii\helpers\Url::to(['recycle'])?>" class="btn btn-default">回收站</a>
 <table class="table table-responsive table-bordered">
