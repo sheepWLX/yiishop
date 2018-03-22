@@ -10,7 +10,7 @@
             <div class="pull-left info">
                 <p>欢迎<?=Yii::$app->user->identity->username?></p>
 
-                <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+                <a href="#"><i class="fa fa-circle text-success"></i> <?=Yii::$app->user->isGuest?'离线':'在线';?></a>
             </div>
         </div>
 

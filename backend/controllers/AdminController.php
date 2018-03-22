@@ -4,30 +4,70 @@ namespace backend\controllers;
 
 use backend\models\Admin;
 use backend\models\LoginForm;
+use function Sodium\compare;
 use yii\web\Request;
 
 class AdminController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $admins = Admin::find()->all();
+        return $this->render('index',compact('admins'));
     }
     public function actionAdd(){
-        $admin = new Admin();
-        $admin->username='王利祥';
-        $admin->password_hash=\Yii::$app->security->generatePasswordHash('123456');
-        $admin->auth_key=\Yii::$app->security->generateRandomString();
-        $admin->login_ip=ip2long(\Yii::$app->request->userIP);
-        $admin->save();
+        $model = new Admin();
+        if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
+            $model->auth_key=\Yii::$app->security->generateRandomString();
+            $model->login_ip=ip2long(\Yii::$app->request->userIP);
+            $model->password_hash = \Yii::$app->security->generatePasswordHash($model->password_hash);
+            $model->save();
+            return $this->redirect('index');
+        }
+//        $admin->username='王利祥';
+//        $admin->password_hash=\Yii::$app->security->generatePasswordHash('123456');
+//        $admin->auth_key=\Yii::$app->security->generateRandomString();
+//        $admin->login_ip=ip2long(\Yii::$app->request->userIP);
+//        $admin->save();
+        return $this->render('add',compact('model'));
+    }
+    public function actionEdit($id){
+        $model = Admin::findOne($id);
+        $password_hash=$model->password_hash;
+//       echo  $password_hash=$model->password_hash;exit;
+        $model->setScenario('edit');
+//        $model->password_hash;exit;
+//        $model->password_hash=$model->password_hash?:;
+        if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
+            $model->auth_key=\Yii::$app->security->generateRandomString();
+            $model->login_ip=ip2long(\Yii::$app->request->userIP);
+
+            $model->password_hash = $model->password_hash?\Yii::$app->security->generatePasswordHash($model->password_hash):$password_hash;
+            $model->save();
+//            echo $model->status;exit;
+            return $this->redirect('index');
+        }
+//        $admin->username='王利祥';
+//        $admin->password_hash=\Yii::$app->security->generatePasswordHash('123456');
+//        $admin->auth_key=\Yii::$app->security->generateRandomString();
+//        $admin->login_ip=ip2long(\Yii::$app->request->userIP);
+//        $admin->save();
+        $model->password_hash=null;
+        return $this->render('add',compact('model'));
+    }
+    public function actionDel($id){
+        if (Admin::findOne($id)->delete()) {
+            return $this->redirect('index');
+        }
     }
     public function actionLogin(){
-//        if (\Yii::$app->user->isGuest) {
-//            return $this->redirect(['index']);
-//        }
+        if (!\Yii::$app->user->isGuest) {
+            return $this->redirect(['index']);
+        }
         $model = new LoginForm();
         $request = new Request();
         if($request->isPost){
             $model->load($request->post());
+//            var_dump($model->rememberMe);exit;
             if($model->validate()){
 //                var_dump($model->rememberMe);exit;
                 $admin=Admin::findOne(['username'=>$model->username]);
