@@ -7,6 +7,9 @@ $params = array_merge(
 );
 
 return [
+//    'as rbac'=>[
+//        'class'=>\backend\filters\RbacFilter::className()
+//    ],
     'name'=>'路客商城',
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
@@ -14,6 +17,9 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+//        'authManager' => [
+//            'class' => 'yii\rbac\DbManager',
+//        ],
 //        'view' => [
 //            'theme' => [
 //                'pathMap' => [

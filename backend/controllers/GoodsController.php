@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\filters\RbacFilter;
 use backend\models\Brand;
 use backend\models\Category;
 use backend\models\Goods;
@@ -13,6 +14,15 @@ use yii\web\Request;
 
 class GoodsController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'rbac'=>[
+                'class'=>RbacFilter::className(),
+            ]
+        ];
+    }
+
     public function actions()
     {
         return [
