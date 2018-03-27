@@ -11,14 +11,14 @@ use crazyfd\qiniu\Qiniu;
 
 class BrandController extends \yii\web\Controller
 {
-    public function behaviors()
-    {
-        return [
-            'rbac'=>[
-                'class'=>RbacFilter::className(),
-            ]
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'rbac'=>[
+//                'class'=>RbacFilter::className(),
+//            ]
+//        ];
+//    }
     /**
      * 显示列表页
      * @return string

@@ -28,15 +28,15 @@ class AdminController extends \yii\web\Controller
     public function actionAdd(){
         $model = new Admin();
         //        实例化组件对象
-        $auth=\Yii::$app->authManager;
-        $roles=$auth->getRoles();
+//        $auth=\Yii::$app->authManager;
+//        $roles=$auth->getRoles();
 
-        $rolesArr=ArrayHelper::map($roles,'name','description');
+//        $rolesArr=ArrayHelper::map($roles,'name','description');
 //        $rolesArr=array_keys($roles);
 //        var_dump(\Yii::$app->request->post());exit;
         $model->setScenario('add');
         if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
-            $model->roles=\Yii::$app->request->post()['Admin']['roles']?\Yii::$app->request->post()['Admin']['roles']:"";
+//            $model->roles=\Yii::$app->request->post()['Admin']['roles']?\Yii::$app->request->post()['Admin']['roles']:"";
             //        通过角色找出角色对象
 //            $role=$auth->getRole($roleName);
             $model->auth_key=\Yii::$app->security->generateRandomString();
@@ -44,23 +44,23 @@ class AdminController extends \yii\web\Controller
             $model->password_hash = \Yii::$app->security->generatePasswordHash($model->password_hash);
             $model->save();
 
-//                判断是否添加权限
-                if ($model->roles) {
-                    //                给当前角色添加权限
-                    foreach ($model->roles as $roleName) {
-//        通过角色找出角色对象
-                        $role=$auth->getRole($roleName);
-                        //        把用户指派给角色
-                        $auth->assign($role,$model->id);
-                    }
-
-                }
+////                判断是否添加权限
+//                if ($model->roles) {
+//                    //                给当前角色添加权限
+//                    foreach ($model->roles as $roleName) {
+////        通过角色找出角色对象
+//                        $role=$auth->getRole($roleName);
+//                        //        把用户指派给角色
+//                        $auth->assign($role,$model->id);
+//                    }
+//
+//                }
 //
 //            $roleName=$model->roles;
 //            var_dump($model->roles);exit;
             return $this->redirect('index');
         }
-        return $this->render('add',compact('model','rolesArr'));
+        return $this->render('add',compact('model'));
     }
     public function actionEdit($id){
         $model = Admin::findOne($id);
