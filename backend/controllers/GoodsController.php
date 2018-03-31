@@ -28,6 +28,9 @@ class GoodsController extends \yii\web\Controller
         return [
             'upload' => [
                 'class' => 'kucha\ueditor\UEditorAction',
+                'config' => [
+                    "imageUrlPrefix"  => "http://admin.yiishop.com",//图片访问路径前缀
+            ],
             ]
         ];
     }

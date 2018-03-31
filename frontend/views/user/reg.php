@@ -11,23 +11,9 @@
 </head>
 <body>
 	<!-- 顶部导航 start -->
-	<div class="topnav">
-		<div class="topnav_bd w990 bc">
-			<div class="topnav_left">
-				
-			</div>
-			<div class="topnav_right fr">
-				<ul>
-					<li>您好，欢迎来到京西！[<a href="login.html">登录</a>] [<a href="register.html">免费注册</a>] </li>
-					<li class="line">|</li>
-					<li>我的订单</li>
-					<li class="line">|</li>
-					<li>客户服务</li>
-
-				</ul>
-			</div>
-		</div>
-	</div>
+    <?php
+    include Yii::getAlias('@app')."/views/common/nav.php";
+    ?>
 	<!-- 顶部导航 end -->
 	
 	<div style="clear:both;"></div>
@@ -149,40 +135,33 @@
                 $.post('/user/reg',$('#reg').serialize(),function (result) {
 //                    console.dir(result);
                     if(result.status){
-                        //tips层-左
-//                        layer.tips(result.msg, '#id或者.class', {
-//                            tips: [4, '#78BA32']
-//                        });
+                        //信息框-例3
+                        layer.msg('注册成功');
+                        window.location.href="/user/index";
                     }else{
                         $.each(result.data,function (k,v) {
-
-                            //tips层-左
-//                            layer.tips(v[0], '#'+k, {
-//                                tips: [2, '#78BA32']
-                            //tips层-右
-
                             layer.tips(v[0], '#'+k,{
                                 tips: [2, '#00FF00'],
                                 tipsMore:true
                             });
-                                console.log(v[0]);
+//                                console.log(v[0]);
                         });
 
                     }
                 },'json')
             });
 //            改变验证码
-            $('#changeCode,#codeImage').click(function () {
+            $('#changeCode,#codeImage,.login_btn').click(function () {
 //                请求更改验证码的地址
                 $.getJSON('/user/code?refresh',function (data) {
                     $("#codeImage").attr('src',data.url);
-                    console.dir(data);
+//                    console.dir(data);
                 })
             });
         });
 		function bindPhoneNum(){
             $.getJSON('/user/send-sms?mobile='+$("#mobile").val(),function (data) {
-                console.dir(data);
+//                console.dir(data);
             });
 			//启用输入框
 			$('#captcha').prop('disabled',false);
