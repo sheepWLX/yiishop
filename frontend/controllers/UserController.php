@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use frontend\components\ShopCart;
+use frontend\models\Cart;
 use frontend\models\User;
 use Mrgoon\AliSms\AliSms;
 use yii\helpers\Json;
@@ -106,6 +108,24 @@ class UserController extends \yii\web\Controller
                 if($user && \Yii::$app->security->validatePassword($model->password,$user->password_hash)){
 //                    登录成功
                     \Yii::$app->user->login($user,$model->rememberMe?3600*24*7:0);
+////                    取出cookie中的数据
+//                    $cart = (new ShopCart())->get();
+////                    把数据同步到数据库中
+//                    $userId = \Yii::$app->user->id;
+//                    foreach($cart as $goodsId=>$num){
+//                        $cartDb = Cart::findone(['user_id'=>$userId,'goods_id'=>$goodsId]);
+//                        if ($cartDb){
+//                            $cartDb->num+=$num;
+//                        }else{
+//                            $cartDb = new Cart();
+//                            $cartDb->goods_id=$goodsId;
+//                            $cartDb->user_id=$userId;
+//                            $cartDb->num=$num;
+//                        }
+//                        $cartDb->save(false);
+//                    }
+//                    清空本地cookie中的数据
+                    (new ShopCart())->dbSyn()->flush()->save(false);
                     $user->login_time=time();
                     $user->login_ip=ip2long(\Yii::$app->request->userIP);
                     $user->save(false);
