@@ -48,7 +48,7 @@ class OrderController extends Controller
             $shopPrice+=$good->shop_price*$cart[$good->id];
             $shopNum+=$cart[$good->id];
         }
-        $shopPrice=number_format($shopPrice,2);
+        $shopPrice=$shopPrice;
 
         $requery = \Yii::$app->request;
         if ($requery->isPost){

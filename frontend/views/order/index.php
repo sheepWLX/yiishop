@@ -156,7 +156,7 @@
 									</li>
 									<li>
 										<span>应付总额：</span>
-										<em>￥ <span class="all_price"><?=number_format($shopPrice+$deliverys[0]->price,2)?></span></em>
+										<em>￥<span class="all_price"><?=number_format(($shopPrice+$deliverys[0]->price),2)?></span></em>
 									</li>
 								</ul>
 							</td>
