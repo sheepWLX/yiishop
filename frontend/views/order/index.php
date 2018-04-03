@@ -216,7 +216,12 @@
             $("#sub_btn").click(function () {
 //               提交数据 
                 $.post('/order/index',$("form").serialize(),function (data) {
-                    
+                    if(data.status){
+//                        console.log(data);
+                        window.location.href='/order/ok?id='+data.id;
+                    }
+
+
                 },'json');
             });
         });
